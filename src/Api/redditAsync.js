@@ -1,42 +1,48 @@
-// import React from 'react'
 
-// https://jsonplaceholder.typicode.com/users
+// import React, { useEffect, useState } from "react"
 
-import React, { useEffect, useState } from "react"
+// function JsonFetch() {
 
-function JsonFetch() {
-// const API_ROOT = 'https://www.reddit.com';
+//   const url = 'https://www.reddit.com/subreddits.json'
+//   const [users, setUsers] = useState([])
 
-  const url = 'https://www.reddit.com/subreddits.json'
-  const [users, setUsers] = useState([])
+//   const fetchData = async () => {
+//     const response = await fetch(url)
+//     const data = await response.json()
+//     setUsers(data)
+//   }
 
-  const fetchData = async () => {
-    const response = await fetch(url)
-    const data = await response.json()
-    setUsers(data)
-  }
-
-  console.log(users);
+//   console.log(users);
   
-  useEffect(() => {
-    fetchData()
-  }, [])
+//   useEffect(() => {
+//     fetchData()
+//   }, [])
 
 
-  //  {users.length > 0 && (
-  //       <ul>
-  //         {users.map(user => (
-  //           <li key={user.id}>{user.name}</li>
-  //         ))}
-  //       </ul>
-  //     )}
-
-  return (
-    <div>
+//   return (
+//     <div>
      
-    </div>
-  )
-}
+//     </div>
+//   )
+// }
+
+
+const API_ROOT = 'https://www.reddit.com';
+
+export const getAllSubreddits = async () => {
+  const response = await fetch(`${API_ROOT}/subreddits.json`);
+  const jsonResponse = await response.json();
+
+  return jsonResponse.data.children.map((subreddit) => subreddit.data);
+};
+
+export const getSubredditPosts = async (subreddit) => {
+  const response = await fetch(`${API_ROOT}${subreddit}.json`);
+  const jsonResponse = await response.json();
+
+  return jsonResponse.data.children.map((post) => post.data);
+};
+
 
 export default JsonFetch;
 
